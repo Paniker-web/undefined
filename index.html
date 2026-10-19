@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b09">
+  <meta name="description" content="Домашние задания — учебный кабинет">
+  <title>Домашние задания | Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./tests-data.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Боковая панель">
+      <a class="brand" href="#" aria-label="На главную">
+        <span class="brand__placeholder">KD</span>
+      </a>
+
+      <section class="profile" aria-label="Профиль пользователя">
+        <div class="profile__avatar" aria-hidden="true">Д</div>
+        <div class="profile__info">
+          <p class="profile__name" id="profileName">Даниил</p>
+          <p class="profile__caption">Учебный кабинет</p>
+        </div>
+        <button class="icon-button profile__edit" id="editNameButton" type="button" aria-label="Изменить имя" title="Изменить имя">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>
+        </button>
+      </section>
+
+      <nav class="navigation" aria-label="Основная навигация">
+        <a class="navigation__link navigation__link--active" href="#assignments" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m9 8-3 4 3 4M15 8l3 4-3 4M13 7l-2 10"/></svg>
+          <span>Домашние задания</span>
+          <span class="navigation__count" id="navCount">0</span>
+        </a>
+        <a class="navigation__link" href="#tests" data-view="tests" aria-current="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8M8 8h8M8 12h5M5 2h14a2 2 0 0 1 2 2v16l-4-2-5 2-5-2-4 2V4a2 2 0 0 1 2-2Z"/></svg>
+          <span>Тесты HTML / CSS</span>
+          <span class="navigation__count" id="testsNavCount">9</span>
+        </a>
+      </nav>
+
+      <div class="sidebar__bottom">
+        <div class="status-card">
+          <span class="status-card__dot"></span>
+          <div><p class="status-card__title">Рабочее пространство</p><p class="status-card__text">Локальное сохранение включено</p></div>
+        </div>
+        <p class="sidebar__footer">ACADEMY <span>•</span> STUDENT SPACE</p>
+      </div>
+    </aside>
+
+    <main class="main-content" id="assignments">
+      <header class="topbar">
+        <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="breadcrumb"><span>Кабинет</span><span class="breadcrumb__separator">/</span><strong>Домашние задания</strong></div>
+        <div class="topbar__right"><span class="topbar__status"><span></span> Личный кабинет</span></div>
+      </header>
+
+      <section class="workspace">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__line"></span> ОБУЧЕНИЕ / ПРАКТИКА</p>
+            <h1>Домашние <span>задания</span></h1>
+          </div>
+        </div>
+        <section class="assignment-section" aria-labelledby="assignmentTitle">
+          <div class="section-heading">
+            <div><h2 id="assignmentTitle">Мои задания</h2><p>Выберите карточку, чтобы открыть прикреплённый файл.</p></div>
+            <button class="button button--primary" id="openAddModal" type="button"><span class="button__plus">+</span> Добавить задание</button>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+              <span class="visually-hidden">Поиск заданий</span>
+              <input id="searchInput" type="search" placeholder="Найти задание..." autocomplete="off">
+              <kbd>Ctrl K</kbd>
+            </label>
+          </div>
+
+          <div class="assignment-grid" id="assignmentGrid" aria-live="polite"></div>
+          <div class="empty-state" id="emptyState">
+            <div class="empty-state__symbol">+</div>
+            <h3 id="emptyTitle">Пока нет заданий</h3>
+            <p id="emptyDescription">Создайте первую карточку и прикрепите файл с заданием.</p>
+            <button class="button button--secondary" id="emptyAddButton" type="button">Добавить задание</button>
+          </div>
+          <p class="storage-note"><span class="storage-note__dot"></span> Данные сохраняются в этом браузере на этом устройстве.</p>
+        </section>
+      </section>
+
+      <section class="workspace tests-workspace" id="tests" hidden>
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__line"></span> ОБУЧЕНИЕ / ПРОВЕРКА ЗНАНИЙ</p>
+            <h1>Тесты <span>HTML / CSS</span></h1>
+          </div>
+        </div>
+        <section class="assignment-section" id="testsCatalog" aria-labelledby="testsTitle">
+          <div class="section-heading">
+            <div><h2 id="testsTitle">Проверочные тесты</h2><p>Выбери тему и проверь, насколько хорошо усвоен материал.</p></div>
+          </div>
+          <div class="tests-grid" id="testsGrid"></div>
+          <p class="storage-note"><span class="storage-note__dot"></span> Результаты и текущий прогресс сохраняются в этом браузере.</p>
+        </section>
+        <section class="quiz-panel" id="quizPanel" hidden aria-labelledby="quizQuestion">
+          <div class="quiz-panel__top">
+            <button class="button button--ghost" id="backToTests" type="button">← Все тесты</button>
+            <span class="quiz-counter" id="quizCounter">Вопрос 1 из 8</span>
+            <span class="quiz-topic" id="quizTopic"></span>
+          </div>
+          <div class="quiz-progress" id="quizProgress" aria-label="Прогресс по тесту"></div>
+          <div class="quiz-content">
+            <p class="eyebrow"><span class="eyebrow__line"></span> ПРОВЕРКА ЗНАНИЙ</p>
+            <h2 id="quizQuestion">Вопрос</h2>
+            <p class="quiz-hint" id="quizHint"></p>
+            <p class="quiz-select-note" id="quizSelectNote" hidden>Можно выбрать несколько вариантов.</p>
+            <div class="quiz-options" id="quizOptions" role="group" aria-label="Варианты ответа"></div>
+            <div class="quiz-feedback" id="quizFeedback" hidden aria-live="polite"></div>
+            <div class="quiz-actions">
+              <button class="button button--ghost" id="quizPrevious" type="button">Назад</button>
+              <button class="button button--primary" id="quizNext" type="button" disabled>Далее <span>→</span></button>
+            </div>
+          </div>
+        </section>
+        <section class="quiz-result" id="quizResult" hidden aria-live="polite"></section>
+      </section>
+    </main>
+  </div>
+
+  <div class="page-loader" id="pageLoader" aria-label="Загрузка страницы" role="status">
+    <div class="loader-mark"><span></span><span></span><span></span></div>
+    <p>Загружаем рабочее пространство<span class="loader-dots">...</span></p>
+  </div>
+
+  <dialog class="modal" id="assignmentModal" aria-labelledby="modalTitle">
+    <form class="modal__form" id="assignmentForm">
+      <div class="modal__header"><div><p class="eyebrow">НОВОЕ ЗАДАНИЕ</p><h2 id="modalTitle">Добавить задание</h2></div><button class="icon-button" id="closeModal" type="button" aria-label="Закрыть окно"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      <label class="field"><span>Название задания <b>*</b></span><input id="assignmentName" name="title" type="text" maxlength="90" placeholder="Например, JS урок 12" required></label>
+      <label class="field"><span>Категория</span><select id="assignmentCategory" name="category"><option value="HTML / CSS">HTML / CSS</option><option value="JavaScript">JavaScript</option><option value="Практика">Практика</option><option value="Другое">Другое</option></select></label>
+      <label class="field"><span>Описание <small>необязательно</small></span><textarea id="assignmentDescription" name="description" rows="3" maxlength="500" placeholder="Краткое описание или требования"></textarea></label>
+      <label class="upload-area" id="uploadArea" for="assignmentFile">
+        <input id="assignmentFile" name="file" type="file">
+        <span class="upload-area__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 16v4h16v-4"/></svg></span>
+        <strong id="uploadTitle">Прикрепить файл</strong>
+        <span id="uploadHint">Перетащите файл сюда или нажмите для выбора</span>
+        <small>PDF, ZIP, изображения, документы и другие форматы</small>
+      </label>
+      <div class="modal__actions"><button class="button button--ghost" id="cancelModal" type="button">Отмена</button><button class="button button--primary" type="submit">Сохранить задание <span>→</span></button></div>
+    </form>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
